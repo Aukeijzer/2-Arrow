@@ -84,7 +84,7 @@ data Step =  Done  Space Pos Heading
 
 -- | Exercise 8
 toEnvironment :: String -> Environment
-toEnvironment s = undefined
+toEnvironment s = if checkProgram Program program then program else error "incorrect syntax, check your headers"
   where program = parser $ alexScanTokens s
          
 
