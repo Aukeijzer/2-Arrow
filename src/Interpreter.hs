@@ -16,6 +16,7 @@ import Algebra
 
 
 data Contents  =  Empty | Lambda | Debris | Asteroid | Boundary
+  deriving (Show,Eq)
 
 type Size      =  Int
 type Pos       =  (Int, Int)
@@ -54,12 +55,22 @@ contentsTable =  [ (Empty   , '.' )
 
 -- Exercise 7
 printSpace :: Space -> String
-printSpace = undefined
+printSpace space = fst $ L.foldrWithKey f ([],(0,0)) space
+  where space2Char contents = foldr
+          (\x xs -> if fst x == contents then snd x:xs else xs ) [] contentsTable
+        ((xMax,yMax),_) = L.findMax space
+        
+        f :: Pos -> Contents -> (String,Pos) -> (String,Pos)
+        f newPos contents (s,oldPos) = (s ++ padding oldPos newPos ++ space2Char contents,newPos)
+        padding (oldX,oldY) (newX,newY) = if oldY == newY 
+          then replicate (newX - oldX) '.' 
+          else replicate (xMax - oldX) '.' ++ "\n" ++ concat (replicate (newY - oldY - 1) emptyLine) ++ replicate newX '.'
+            where emptyLine = replicate xMax '.' ++ "\n"
 
 
 -- These three should be defined by you
-type Ident = ()
-type Commands = ()
+type Ident = String
+type Commands = [Command]
 type Heading = ()
 
 type Environment = Map Ident Commands
@@ -73,7 +84,9 @@ data Step =  Done  Space Pos Heading
 
 -- | Exercise 8
 toEnvironment :: String -> Environment
-toEnvironment = undefined
+toEnvironment s = undefined
+  where program = parser $ alexScanTokens s
+         
 
 -- | Exercise 9
 step :: Environment -> ArrowState -> Step
