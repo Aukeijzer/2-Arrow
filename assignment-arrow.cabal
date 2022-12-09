@@ -17,9 +17,11 @@ executable arrow
                       , Parser
 
   build-depends:       base >=4.14,
+                       ghc,
                        containers,
                        uu-tc,
-                       array
+                       array,
+                       text
 
   build-tool-depends:  alex:alex,
                        happy:happy
