@@ -45,7 +45,7 @@ main = do
   --If the wrong file is given the program just throws and error and quits.
   --This is done instead of asking for a new input, because this usually means something is wrong with the file
   --Also this is the first thing a user does, they can just run the program again.
-  putStrLn "Give program file (file must be in directory examples): "
+  putStrLn "Give program file (file must be in directory programs): "
   programFile <- getLine
   programChars <- readFile $ "programs/" ++ programFile ++ ".arrow"
   let environment = toEnvironment programChars
@@ -53,7 +53,7 @@ main = do
   putStrLn ""
   putStrLn programChars
 
-  putStrLn "Give space file (file must be in directory examples)"
+  putStrLn "Give space file (file must be in directory spaces)"
   spaceFile <- getLine
   spaceChars <- readFile $ "spaces/" ++ spaceFile ++ ".space"
   let parsedSpace = parse parseSpace spaceChars
